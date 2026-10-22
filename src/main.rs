@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 
 mod knapsack;
+mod greedy_approximation;
 
 use self::knapsack::{Knapsack, Item};
+use self::greedy_approximation::greedy_approximation;
 
 fn build_hashmap_from(items: &Vec<Item>) -> HashMap<String, Item> {
     let mut res = HashMap::new();
@@ -24,15 +26,26 @@ fn main() {
         Item::new("Portable", 1000, 100),
     ];
     let all_items = build_hashmap_from(&all_items_vec);
-    let mut knapsack_1 = Knapsack::new(2000);
-    if (
-        knapsack_1.add_item(dbg!(&all_items["Livre"])) &&
-        knapsack_1.add_item(& all_items["Piece"]) &&
-        knapsack_1.withdraw_item(& all_items["Piece"])
-    ) {
-        println!("L'ajout des items s'est bien passé.");
-    } else {
-        println!("Impossible d'ajouter des items.");
+
+    {
+        // Manipulation of Knapsack
+        let mut knapsack_1 = Knapsack::new(2000);
+        if
+            knapsack_1.add_item(&all_items["Livre"]) &&
+            knapsack_1.add_item(& all_items["Piece"]) &&
+            knapsack_1.withdraw_item(& all_items["Piece"])
+        {
+            println!("L'ajout des items s'est bien passé.");
+        } else {
+            println!("Impossible d'ajouter des items.");
+        }
+        knapsack_1.show(&all_items);
     }
-    knapsack_1.show(&all_items);
+
+    {
+        // Greedy Algo
+        let greedy: Knapsack = greedy_approximation(&all_items_vec, 2000);
+        greedy.show(&all_items);
+    }
+
 }
