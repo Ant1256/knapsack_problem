@@ -4,8 +4,35 @@ mod knapsack;
 
 use self::knapsack::{Knapsack, Item};
 
+fn build_hashmap_from(items: &Vec<Item>) -> HashMap<String, Item> {
+    let mut res = HashMap::new();
+    for item in items {
+        res.insert(item.name().clone(), item.clone());
+    };
+    res
+}
+
 fn main() {
-    let knapsack_1 = Knapsack::new(50);
-    let the_items: HashMap<String, Item> = HashMap::new();
-    knapsack_1.show(&the_items);
+    let all_items_vec: Vec<Item> = vec![
+        Item::new("Livre", 1000, 15),
+        Item::new("Carte", 200, 5),
+        Item::new("Carte rare", 200, 25),
+        Item::new("Lunettes", 500, 20),
+        Item::new("Peluche", 500, 10),
+        Item::new("Parfum", 800, 40),
+        Item::new("Piece", 10, 10),
+        Item::new("Portable", 1000, 100),
+    ];
+    let all_items = build_hashmap_from(&all_items_vec);
+    let mut knapsack_1 = Knapsack::new(2000);
+    if (
+        knapsack_1.add_item(dbg!(&all_items["Livre"])) &&
+        knapsack_1.add_item(& all_items["Piece"]) &&
+        knapsack_1.withdraw_item(& all_items["Piece"])
+    ) {
+        println!("L'ajout des items s'est bien passé.");
+    } else {
+        println!("Impossible d'ajouter des items.");
+    }
+    knapsack_1.show(&all_items);
 }

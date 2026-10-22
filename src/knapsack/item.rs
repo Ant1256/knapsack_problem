@@ -6,6 +6,7 @@
 //! - A weight which represents the total fraction of knapsack ressources that this item consumes and that, thus, will not be available for other items
 //! - A value which is the gain that the knapsack problem wants to maximize
 
+#[derive(Debug)]
 pub struct Item {
     name: String,
     weight: u32,
@@ -19,6 +20,16 @@ impl PartialEq for Item {
 }
 
 impl Eq for Item {}
+
+impl Clone for Item {
+    fn clone(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            weight: self.weight,
+            value: self.value,
+        }
+    }
+}
 
 impl Item {
     pub fn new(name: &str, weight: u32, value: u32) -> Self {
