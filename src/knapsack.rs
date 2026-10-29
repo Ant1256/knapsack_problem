@@ -1,6 +1,6 @@
 //! A Knapsack that contains several items who has a total weight and a total value
 
-//! Provides an object that has a limit of weight and where algorithms we will develop tend to increase its value as much as they can
+//! Provides an object that has a limit of weight and where algorithms we will develop try to increase its value as much as they can
 //! Knapsacks are represented with four values
 //! - A maximum weight (max_weight). The total weight of the items in the Knapsack can never go beyond that limit. Otherwise the Knapsack is not valid and must be instantly deleted.
 //! - A total weight that represents the sum of the weights of all the items that a Knapsack contains.

@@ -47,16 +47,6 @@ impl Item {
         println!("{} [Weight : {} ; Value : {}]", self.name, self.weight, self.value);
     }
 
-    // TODO Refactor code under this commentary to respect Single Responsibility Principle
-
-    pub fn value_per_unit(&self) -> f64 {
-        self.value as f64 / self.weight as f64
-    }
-
-    pub fn is_more_valuable(&self, other: &Self) -> bool {
-        self.value_per_unit() >= other.value_per_unit()
-    }
-
     // Getters
     pub fn name(&self) -> &String {
         & self.name
