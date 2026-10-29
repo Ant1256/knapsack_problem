@@ -35,17 +35,21 @@ fn main() {
             knapsack_1.add_item(& all_items["Piece"]) &&
             knapsack_1.withdraw_item(& all_items["Piece"])
         {
-            println!("L'ajout des items s'est bien passé.");
+            println!("L'ajout des items dans le sac s'est bien passé.\n");
         } else {
-            println!("Impossible d'ajouter des items.");
+            println!("Impossible d'ajouter des items dans le sac.\n");
         }
+        println!("Sac à dos de test après avoir rajouté des items :");
         knapsack_1.show(&all_items);
+        println!("");
     }
 
     {
         // Greedy Algo
         let greedy: Knapsack = greedy_approximation(&all_items_vec, 2000);
+        println!("Sac à dos optimal d'après l'algorithme glouton :");
         greedy.show(&all_items);
+        println!("");
     }
 
 }
