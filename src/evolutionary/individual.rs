@@ -1,6 +1,8 @@
 //! Individual that is part of a complex evolutionary process
 //!
 //! Provides an individual that contains a knapsack filled with items. It can reproduce itself.
+//! An individual has genes that are represented by a Knapsack
+//! A gene of an individual is considered to be a basic element of a Knapsack : an Item.
 
 use rand::RngExt;
 
