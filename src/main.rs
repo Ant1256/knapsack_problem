@@ -43,12 +43,6 @@ fn main() {
         println!("Sac à dos de test après avoir rajouté des items :");
         knapsack_1.show(&all_items);
         println!("");
-
-        // addable_items and withdrawable_items
-        knapsack_1.add_item(&all_items["Carte rare"]);
-        println!("Withdrawable items : {:?}", knapsack_1.withdrawable_items(&all_items_vec));
-        println!("Addable items : {:?}", knapsack_1.addable_items(&all_items_vec));
-        println!("");
     }
 
     {

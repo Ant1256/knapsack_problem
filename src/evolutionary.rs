@@ -1,2 +1,5 @@
 mod individual;
-use individual::Individual;
+mod hyperparams;
+
+pub use individual::Individual;
+pub use hyperparams::Hyperparameters; 

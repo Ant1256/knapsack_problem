@@ -96,4 +96,10 @@ impl Knapsack {
         res
     }
 
+    // Getters
+
+    pub fn total_value(&self) -> u32 {
+        self.total_value
+    }
+
 }
