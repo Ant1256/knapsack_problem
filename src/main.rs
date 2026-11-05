@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 mod knapsack;
 mod greedy_approximation;
+mod evolutionary;
 
 use self::knapsack::{Knapsack, Item};
 use self::greedy_approximation::greedy_approximation;
@@ -32,7 +33,7 @@ fn main() {
         let mut knapsack_1 = Knapsack::new(2000);
         if
             knapsack_1.add_item(&all_items["Livre"]) &&
-            knapsack_1.add_item(& all_items["Piece"]) &&
+            knapsack_1.add_item(&all_items["Piece"]) &&
             knapsack_1.withdraw_item(& all_items["Piece"])
         {
             println!("L'ajout des items dans le sac s'est bien passé.\n");
@@ -42,12 +43,18 @@ fn main() {
         println!("Sac à dos de test après avoir rajouté des items :");
         knapsack_1.show(&all_items);
         println!("");
+
+        // addable_items and withdrawable_items
+        knapsack_1.add_item(&all_items["Carte rare"]);
+        println!("Withdrawable items : {:?}", knapsack_1.withdrawable_items(&all_items_vec));
+        println!("Addable items : {:?}", knapsack_1.addable_items(&all_items_vec));
+        println!("");
     }
 
     {
         // Greedy Algo
         let greedy: Knapsack = greedy_approximation(&all_items_vec, 2000);
-        println!("Sac à dos optimal d'après l'algorithme glouton :");
+        println!("Sac à dos construit avec l'algorithme glouton :");
         greedy.show(&all_items);
         println!("");
     }

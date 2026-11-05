@@ -19,6 +19,17 @@ pub struct Knapsack {
     configuration: HashSet<String>,
 } 
 
+impl Clone for Knapsack {
+    fn clone(&self) -> Self {
+        Self {
+            max_weight: self.max_weight,
+            total_weight: self.total_weight,
+            total_value: self.total_value,
+            configuration: self.configuration.clone(),
+        }
+    }
+}
+
 impl Knapsack {
     pub fn new(max_weight: u32) -> Self {
         Knapsack {
@@ -59,4 +70,30 @@ impl Knapsack {
         }
         false
     }
+
+    
+    pub fn addable_items(&self, all_items: &Vec<Item>) -> Vec<Item> {
+        let mut res: Vec<Item> = Vec::new();
+        let mut clone = self.clone();
+        for item in all_items {
+            if clone.add_item(&item) {
+                res.push(item.clone());
+                clone.withdraw_item(&item);
+            }
+        }
+        res
+    }
+
+    pub fn withdrawable_items(&self, all_items: &Vec<Item>) -> Vec<Item> {
+        let mut res: Vec<Item> = Vec::new();
+        let mut clone = self.clone();
+        for item in all_items {
+            if clone.withdraw_item(&item) {
+                res.push(item.clone());
+                clone.add_item(&item);
+            }
+        }
+        res
+    }
+
 }
