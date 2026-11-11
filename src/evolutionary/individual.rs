@@ -6,6 +6,7 @@
 
 use rand::RngExt;
 use libm::exp;
+use std::collections::HashMap;
 
 use super::super::knapsack::{Knapsack, Item};
 use super::Hyperparameters;
@@ -23,6 +24,16 @@ impl Clone for Individual {
 }
 
 impl Individual {
+    pub fn from(base: &Knapsack) -> Self {
+        Self {
+            genes: base.clone(),
+        }
+    }
+
+    pub fn show(&self, all_items: &HashMap<String, Item>) {
+        self.genes.show(all_items);
+    }
+
     fn modify_random_gene(&mut self, all_items: &Vec<Item>) {
         let mut rng = rand::rng();
         let addable_items = self.genes.addable_items(all_items);
