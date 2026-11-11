@@ -52,7 +52,7 @@ impl Individual {
         }
     }
 
-    pub fn make_child(&self, hp: &Hyperparameters, all_items: &Vec<Item>) -> Self {
+    fn make_child(&self, hp: &Hyperparameters, all_items: &Vec<Item>) -> Self {
         let mut rng = rand::rng();
         let mut res = self.clone();
         while rng.random_range(0..hp.mut_chance) == 0 {

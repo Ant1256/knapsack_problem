@@ -43,6 +43,7 @@ fn main() {
         println!("Sac à dos de test après avoir rajouté des items :");
         knapsack_1.show(&all_items);
         println!("");
+        // let children = 
     }
 
     {
