@@ -1,12 +1,12 @@
-// use rand::RngExt;
 use rand::seq::SliceRandom;
+use std::cmp::min;
 
 mod individual;
 mod hyperparams;
 
 pub use individual::Individual;
 pub use hyperparams::Hyperparameters;
-use super::{Item, Knapsack, greedy_approximation};
+use super::{Item, Knapsack, greedy_approximation, build_hashmap_from};
 
 pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparameters) -> Knapsack {
     let start_knapsack = greedy_approximation(all_items, max_weight);
@@ -20,6 +20,11 @@ pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparam
         }
         population = next_generation;
         shrink_population(&mut population, hp.max_individuals);
+        // Temporary tests
+        let all_items_legended = build_hashmap_from(all_items);
+        if iter_num % 100 == 0 {
+            mode(&population).genes().show(&all_items_legended);
+        }
     }
     mode(&population).genes().clone()
 }
@@ -27,7 +32,7 @@ pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparam
 fn shrink_population(population: &mut Vec<Individual>, max_amount: usize) {
     let mut rng = rand::rng();
     population.shuffle(&mut rng);
-    *population = population[..max_amount].to_vec();
+    *population = population[..min(max_amount, population.len())].to_vec();
 }
 
 fn mode(population: &Vec<Individual>) -> Individual {

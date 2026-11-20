@@ -1,20 +1,12 @@
-use std::collections::HashMap;
-
 mod knapsack;
 mod greedy_approximation;
 mod evolutionary;
+mod generic_utils;
 
+use self::generic_utils::*;
 use self::knapsack::{Knapsack, Item};
 use self::greedy_approximation::greedy_approximation;
-use self::evolutionary::{Individual, Hyperparameters};
-
-fn build_hashmap_from(items: &Vec<Item>) -> HashMap<String, Item> {
-    let mut res = HashMap::new();
-    for item in items {
-        res.insert(item.name().clone(), item.clone());
-    };
-    res
-}
+use self::evolutionary::{Individual, Hyperparameters, genetic_algorithm};
 
 fn main() {
     let all_items_vec: Vec<Item> = vec![
@@ -62,6 +54,12 @@ fn main() {
         println!("Sac à dos construit avec l'algorithme glouton :");
         greedy.show(&all_items);
         println!("");
+
+        // Genetic algo
+        let mut hyperparams = Hyperparameters::new(&all_items_vec);
+        hyperparams.change_total_iterations(1000);
+        hyperparams.change_growth_factor(5.0);
+        let genetic: Knapsack = genetic_algorithm(&all_items_vec, 2000, &hyperparams);
     }
 
 }
