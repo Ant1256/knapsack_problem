@@ -19,6 +19,8 @@ pub struct Hyperparameters {
     pub growth_factor: f64,
     pub max_total_value: u32,
     pub mut_chance: usize,
+    pub total_iterations: usize,
+    pub max_individuals: usize,
 }
 
 impl Hyperparameters {
@@ -28,6 +30,8 @@ impl Hyperparameters {
             growth_factor: 1.0,
             max_total_value: sum_of_values(all_items),
             mut_chance: 10,
+            total_iterations: 10000,
+            max_individuals: 2000,
         }
     }
 
@@ -59,6 +63,20 @@ impl Hyperparameters {
             panic!("The mut chance cannot be zero.");
         }
         self.mut_chance = new_val;
+    }
+
+    pub fn change_total_iterations(&mut self, new_val: usize) {
+        if new_val == 0 {
+            panic!("The total iterations number cannot be zero.");
+        }
+        self.total_iterations = new_val;
+    }
+
+    pub fn change_max_individuals(&mut self, new_val: usize) {
+        if new_val == 0 {
+            panic!("The maximum individuals amount cannot be zero.");
+        }
+        self.total_iterations = new_val;
     }
 }
 

@@ -23,6 +23,14 @@ impl Clone for Individual {
     }
 }
 
+impl PartialEq for Individual {
+    fn eq(&self, other: &Self) -> bool {
+        return self.genes == other.genes;
+    }
+}
+
+impl Eq for Individual {}
+
 impl Individual {
     pub fn from(base: &Knapsack) -> Self {
         Self {
@@ -85,5 +93,11 @@ impl Individual {
             res.push(self.make_child(hp, all_items));
         }
         res
+    }
+
+    // Getters
+
+    pub fn genes(&self) -> &Knapsack {
+        & self.genes
     }
 }

@@ -17,7 +17,7 @@ pub struct Knapsack {
     total_weight: u32,
     total_value: u32,
     configuration: HashSet<String>,
-} 
+}
 
 impl Clone for Knapsack {
     fn clone(&self) -> Self {
@@ -29,6 +29,17 @@ impl Clone for Knapsack {
         }
     }
 }
+
+impl PartialEq for Knapsack {
+    fn eq(&self, other: &Self) -> bool {
+        if self.max_weight != other.max_weight {
+            return false;
+        }
+        self.configuration == other.configuration
+    }
+}
+
+impl Eq for Knapsack {}
 
 impl Knapsack {
     pub fn new(max_weight: u32) -> Self {
