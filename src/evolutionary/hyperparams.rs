@@ -11,6 +11,13 @@
 //! By default, it is the sum of the value of all objects given. It cannot be 0.
 //! mut_chance : the reciprocal of the chance for an individual to mutate during his creation. In other words an individual has 1 / mut_chance to mutate. Thus, the more it is ellevated, the less mutations are likely to appear.
 //! mut_chance has a default value of 10 and cannot be 0.
+//! total_iterations : the number of generations the genetic algorithm will emulate. The higher it is the more the final solution has chances to be the global optimum. But if it is high it will also take more time.
+//! It is set to 10_000 by default and cannot be zero.
+//! max_individuals : the number of maximum individuals of population can take. If a population exceeds this number it will shrink randomly until it reaches this number.
+//! There are two reasons for that : 
+//! Firstly the fact that an unlimited amount of individuals evoloving all together costs alot of computer ressources.
+//! Secondly we don't want an optimum who appears at gen 100_000 to be drowned in billions of other individuals and take millions of other generations to be the most represented individual in the population.
+//! max_individuals is 2000 by default and cannot be zero.
 
 use super::super::knapsack::Item;
 
