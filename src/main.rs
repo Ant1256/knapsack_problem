@@ -59,7 +59,12 @@ fn main() {
         let mut hyperparams = Hyperparameters::new(&all_items_vec);
         hyperparams.change_total_iterations(1000);
         hyperparams.change_growth_factor(5.0);
-        let genetic: Knapsack = genetic_algorithm(&all_items_vec, 2000, &hyperparams);
+        println!("Algorithme génétique avec logs : ");
+        let genetic: Knapsack = genetic_algorithm(&all_items_vec, 2000, &hyperparams, true);
+        println!("");
+        println!("Sac à dos construit avec l'algorithme génétique : ");
+        println!("");
+        genetic.show(&all_items);
     }
 
 }

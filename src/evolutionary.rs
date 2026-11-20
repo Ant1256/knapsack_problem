@@ -8,11 +8,12 @@ pub use individual::Individual;
 pub use hyperparams::Hyperparameters;
 use super::{Item, Knapsack, greedy_approximation, build_hashmap_from};
 
-pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparameters) -> Knapsack {
+pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparameters, logs: bool) -> Knapsack {
     let start_knapsack = greedy_approximation(all_items, max_weight);
     let start = Individual::from(&start_knapsack);
     let mut population: Vec<Individual> = vec![start];
     let mut next_generation: Vec<Individual>;
+    let all_items_legended = build_hashmap_from(all_items);
     for iter_num in 0..hp.total_iterations {
         next_generation = Vec::new();
         for indiv in population {
@@ -20,10 +21,14 @@ pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparam
         }
         population = next_generation;
         shrink_population(&mut population, hp.max_individuals);
-        // Temporary tests
-        let all_items_legended = build_hashmap_from(all_items);
-        if iter_num % 100 == 0 {
-            mode(&population).genes().show(&all_items_legended);
+        if logs {
+            if iter_num % 100 == 0 {
+                println!("-----------------------------------------------");
+                println!("");
+                println!("Generation {}", iter_num);
+                mode(&population).genes().show(&all_items_legended);
+                println!("");
+            }
         }
     }
     mode(&population).genes().clone()
