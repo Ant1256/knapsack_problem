@@ -74,7 +74,7 @@ impl Individual {
     fn make_child(&self, hp: &Hyperparameters, all_items: &Vec<Item>) -> Self {
         let mut rng = rand::rng();
         let mut res = self.clone();
-        while rng.random_range(0..hp.mut_chance) == 0 {
+        while rng.random_range(0..hp.mut_chance()) == 0 {
             res.modify_random_gene(all_items);
         };
         res
@@ -82,7 +82,7 @@ impl Individual {
 
     pub fn make_children(&self, hp: &Hyperparameters, all_items: &Vec<Item>) -> Vec<Self> {
         let mut res = Vec::new();
-        let coef: f64 = ((exp(hp.growth_factor * self.genes.total_value() as f64 / hp.max_total_value as f64) - 1.0) / (exp(hp.growth_factor) - 1.0)) * hp.max_children as f64;
+        let coef: f64 = ((exp(hp.growth_factor() * self.genes.total_value() as f64 / hp.max_total_value() as f64) - 1.0) / (exp(hp.growth_factor()) - 1.0)) * hp.max_children() as f64;
         let mut rng = rand::rng();
         let int_coef = coef as u32;
         let last_child_proba = coef - (int_coef as f64);

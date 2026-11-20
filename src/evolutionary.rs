@@ -14,13 +14,13 @@ pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparam
     let mut population: Vec<Individual> = vec![start];
     let mut next_generation: Vec<Individual>;
     let all_items_legended = build_hashmap_from(all_items);
-    for iter_num in 0..hp.total_iterations {
+    for iter_num in 0..hp.total_iterations() {
         next_generation = Vec::new();
         for indiv in population {
             next_generation.append(&mut indiv.make_children(hp, all_items));
         }
         population = next_generation;
-        shrink_population(&mut population, hp.max_individuals);
+        shrink_population(&mut population, hp.max_individuals());
         if logs {
             if iter_num % 100 == 0 {
                 println!("-----------------------------------------------");

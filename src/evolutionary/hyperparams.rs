@@ -22,12 +22,12 @@
 use super::super::knapsack::Item;
 
 pub struct Hyperparameters {
-    pub max_children: u32,
-    pub growth_factor: f64,
-    pub max_total_value: u32,
-    pub mut_chance: usize,
-    pub total_iterations: usize,
-    pub max_individuals: usize,
+    max_children: u32,
+    growth_factor: f64,
+    max_total_value: u32,
+    mut_chance: usize,
+    total_iterations: usize,
+    max_individuals: usize,
 }
 
 impl Hyperparameters {
@@ -40,6 +40,32 @@ impl Hyperparameters {
             total_iterations: 10000,
             max_individuals: 2000,
         }
+    }
+
+    // Getters
+
+    pub fn max_children(&self) -> u32 {
+        self.max_children
+    }
+
+    pub fn growth_factor(&self) -> f64 {
+        self.growth_factor
+    }
+
+    pub fn max_total_value(&self) -> u32 {
+        self.max_total_value
+    }
+
+    pub fn mut_chance(&self) -> usize {
+        self.mut_chance
+    }
+
+    pub fn total_iterations(&self) -> usize {
+        self.total_iterations
+    }
+
+    pub fn max_individuals(&self) -> usize {
+        self.max_individuals
     }
 
     // Setters
