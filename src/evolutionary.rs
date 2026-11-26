@@ -6,7 +6,7 @@ mod hyperparams;
 
 pub use individual::Individual;
 pub use hyperparams::Hyperparameters;
-use super::{Item, Knapsack, greedy_approximation, build_hashmap_from};
+use super::{Item, Knapsack, greedy_approximation};
 
 pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparameters, logs: bool) -> Knapsack {
     let start_knapsack = greedy_approximation(all_items, max_weight);
@@ -15,7 +15,6 @@ pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparam
     let mut current_max_val = current_max.genes().total_value();
     let mut population: Vec<Individual> = vec![start];
     let mut next_generation: Vec<Individual>;
-    let all_items_legended = build_hashmap_from(all_items);
     for iter_num in 0..hp.total_iterations() {
         next_generation = Vec::new();
         for indiv in &population {
@@ -35,7 +34,7 @@ pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparam
                 println!("-----------------------------------------------");
                 println!("");
                 println!("Generation {}", iter_num);
-                mode(&population).genes().show(&all_items_legended);
+                mode(&population).genes().show(&all_items);
                 println!("");
             }
         }

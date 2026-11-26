@@ -2,20 +2,22 @@
 //! 
 //! Provides the most basic element of the knapsack problem : the item that fills the knapsack
 //! Items are represented by three values :
-//! - A name which is a visual representation of an item for humans
+//! - An id which is a unique key that identifies an item
 //! - A weight which represents the total fraction of knapsack ressources that this item consumes and that, thus, will not be available for other items
 //! - A value which is the gain that the knapsack problem wants to maximize
 
+use super::super::IdGenerator;
+
 #[derive(Debug)]
 pub struct Item {
-    name: String,
+    id: usize,
     weight: u32,
     value: u32,
 }
 
 impl PartialEq for Item {
     fn eq(&self, other: &Self) -> bool {
-        self.name == other.name
+        self.id == other.id
     }
 }
 
@@ -24,7 +26,7 @@ impl Eq for Item {}
 impl Clone for Item {
     fn clone(&self) -> Self {
         Self {
-            name: self.name.clone(),
+            id: self.id,
             weight: self.weight,
             value: self.value,
         }
@@ -32,24 +34,24 @@ impl Clone for Item {
 }
 
 impl Item {
-    pub fn new(name: &str, weight: u32, value: u32) -> Self {
+    pub fn new(the_id_gen: &mut IdGenerator, weight: u32, value: u32) -> Self {
         if weight == 0 || value == 0 {
             panic!("Weight and value must be positive.")
         }
         Self {
-            name: name.to_string(),
+            id: the_id_gen.next(),
             weight,
             value,
         }
     }
 
     pub fn show(&self) {
-        println!("{} [Weight : {} ; Value : {}]", self.name, self.weight, self.value);
+        println!("{} [Weight : {} ; Value : {}]", self.id, self.weight, self.value);
     }
 
     // Getters
-    pub fn name(&self) -> &String {
-        & self.name
+    pub fn id(&self) -> usize {
+        self.id
     }
 
     pub fn weight(&self) -> u32 {

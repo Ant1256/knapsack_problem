@@ -7,7 +7,7 @@
 //! - A total value that represents the sum of the values of all the items in a Knapsack. The goal of the algorithms provided in this project is to maximize this total_weight.
 //! - A configuration that shows precisely which item is contained in the Knapsack.
 
-use std::collections::{HashSet, HashMap};
+use std::collections::HashSet;
 
 mod item;
 pub use self::item::Item;
@@ -16,7 +16,7 @@ pub struct Knapsack {
     max_weight: u32,
     total_weight: u32,
     total_value: u32,
-    configuration: HashSet<String>,
+    configuration: HashSet<usize>,
 }
 
 impl Clone for Knapsack {
@@ -51,13 +51,11 @@ impl Knapsack {
         }
     }
 
-    pub fn show(&self, all_items: &HashMap<String, Item>) {
+    pub fn show(&self, all_items: &Vec<Item>) {
         println!("Knapsack [Weight : {} / {} ; Value : {}]", self.total_weight, self.max_weight, self.total_value);
         for x in self.configuration.iter() {
             print!("\t");
-            if let Some(val) = all_items.get(x) {
-                val.show();
-            }
+            all_items[*x].show();
         }
     }
 
@@ -65,7 +63,7 @@ impl Knapsack {
         if self.total_weight + item.weight() > self.max_weight {
             return false;
         }
-        if self.configuration.insert(item.name().clone()) {
+        if self.configuration.insert(item.id()) {
             self.total_weight += item.weight();
             self.total_value += item.value();
             return true;
@@ -74,7 +72,7 @@ impl Knapsack {
     }
 
     pub fn withdraw_item(&mut self, item: &Item) -> bool {
-        if self.configuration.remove(item.name()) {
+        if self.configuration.remove(&item.id()) {
             self.total_weight -= item.weight();
             self.total_value -= item.value();
             return true;

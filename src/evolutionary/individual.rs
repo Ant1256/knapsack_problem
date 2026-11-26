@@ -6,7 +6,6 @@
 
 use rand::RngExt;
 use libm::exp;
-use std::collections::HashMap;
 
 use super::super::knapsack::{Knapsack, Item};
 use super::Hyperparameters;
@@ -38,7 +37,7 @@ impl Individual {
         }
     }
 
-    pub fn show(&self, all_items: &HashMap<String, Item>) {
+    pub fn show(&self, all_items: &Vec<Item>) {
         self.genes.show(all_items);
     }
 
