@@ -11,15 +11,24 @@ use super::{Item, Knapsack, greedy_approximation, build_hashmap_from};
 pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparameters, logs: bool) -> Knapsack {
     let start_knapsack = greedy_approximation(all_items, max_weight);
     let start = Individual::from(&start_knapsack);
+    let mut current_max: Individual = start.clone();
+    let mut current_max_val = current_max.genes().total_value();
     let mut population: Vec<Individual> = vec![start];
     let mut next_generation: Vec<Individual>;
     let all_items_legended = build_hashmap_from(all_items);
     for iter_num in 0..hp.total_iterations() {
         next_generation = Vec::new();
-        for indiv in population {
+        for indiv in &population {
             next_generation.append(&mut indiv.make_children(hp, all_items));
         }
         population = next_generation;
+        for indiv in &population {
+            if indiv.genes().total_value() > current_max_val {
+                current_max = indiv.clone();
+                current_max_val = indiv.genes().total_value();
+                println!("Nouveau maximum : {}", current_max_val);
+            }
+        }
         shrink_population(&mut population, hp.max_individuals());
         if logs {
             if iter_num % 100 == 0 {
@@ -31,7 +40,7 @@ pub fn genetic_algorithm(all_items: &Vec<Item>, max_weight: u32, hp: &Hyperparam
             }
         }
     }
-    mode(&population).genes().clone()
+    current_max.genes().clone()
 }
 
 fn shrink_population(population: &mut Vec<Individual>, max_amount: usize) {
